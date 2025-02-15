@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FiCode, FiKey, FiMenu, FiX } from "react-icons/fi";
+import { FiKey, FiMenu, FiX } from "react-icons/fi";
 import { useState, useEffect } from "react";
 
 export const Header = () => {

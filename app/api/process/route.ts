@@ -7,7 +7,6 @@ import {
   getCodeCache,
   saveToCodeCache,
 } from "@/lib/supabase";
-import { cookies } from "next/headers";
 
 // Initialize AI clients with default keys
 const defaultGoogleKey = process.env.GOOGLE_API_KEY || "";

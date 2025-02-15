@@ -91,7 +91,6 @@ export default function FlowchartViewer({
   const [showExplanation, setShowExplanation] = useState(false);
   const [svgContent, setSvgContent] = useState<string>("");
   const [copied, setCopied] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const initializeMermaid = async () => {

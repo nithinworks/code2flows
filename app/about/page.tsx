@@ -31,15 +31,15 @@ export default function About() {
                   documentation more intuitive and accessible for everyone.
                 </p>
 
-                <h2 className="text-2xl font-semibold text-[#001e2b] mt-12 mb-4 font-['Bricolage_Grotesque']">
+                <h2 className="text-2xl font-semibold text-[#001e2b] mt-12 mb-4 font-bricolage">
                   Our Vision
                 </h2>
                 <p className="text-[#001e2b]/70 mb-6">
                   We believe that visual representation of code should be
-                  effortless. Whether you're a seasoned developer documenting
-                  your work, a team lead explaining system architecture, or a
-                  student learning to code, FlowViz helps you understand and
-                  communicate code structure more effectively.
+                  effortless. Whether you&apos;re a seasoned developer
+                  documenting your work, a team lead explaining system
+                  architecture, or a student learning to code, FlowViz helps you
+                  understand and communicate code structure more effectively.
                 </p>
 
                 <h2 className="text-2xl font-semibold text-[#001e2b] mt-12 mb-4 font-['Bricolage_Grotesque']">

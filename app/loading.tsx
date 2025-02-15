@@ -1,15 +1,19 @@
 "use client";
 
+import Image from "next/image";
+
 export default function Loading() {
   return (
     <div className="fixed inset-0 bg-[#fbf9f6] z-[100] flex flex-col items-center justify-center">
       <div className="relative flex flex-col items-center">
         {/* Logo */}
         <div className="w-16 h-16 mb-8">
-          <img
+          <Image
             src="/Codetoflows.svg"
             alt="Loading..."
-            className="w-full h-full animate-pulse"
+            width={64}
+            height={64}
+            className="animate-pulse"
           />
         </div>
 

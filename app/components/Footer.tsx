@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FiCode } from "react-icons/fi";
 
 export const Footer = () => {
   return (
