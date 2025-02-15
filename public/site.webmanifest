@@ -1,0 +1,16 @@
+{
+  "name": "CodetoFlows",
+  "short_name": "CodetoFlows",
+  "description": "Transform your code into beautiful, interactive flowcharts instantly with AI-powered visualization.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf9f6",
+  "theme_color": "#001e2b",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

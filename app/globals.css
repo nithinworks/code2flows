@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbf9f6;
+  --foreground: #001e2b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,5 +17,83 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Font classes */
+.font-sans {
+  font-family: var(--font-plus-jakarta);
+}
+
+.font-bricolage {
+  font-family: var(--font-bricolage);
+}
+
+/* Loading animation */
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-loading-bar {
+  will-change: transform;
+  animation: loading-bar 2s ease-in-out infinite;
+}
+
+/* Gradient animation */
+@keyframes gradient {
+  0% {
+    transform: rotate(-10deg) scale(0.95);
+    opacity: 0.2;
+  }
+  50% {
+    transform: rotate(-10deg) scale(1.05);
+    opacity: 0.25;
+  }
+  100% {
+    transform: rotate(-10deg) scale(0.95);
+    opacity: 0.2;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 15s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Optimize animations */
+.motion-safe {
+  will-change: transform, opacity;
+}
+
+/* Prevent FOUC */
+html {
+  background: #fbf9f6;
+}
+
+/* Page transition */
+.page-transition-enter {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 400ms, transform 400ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 400ms;
 }
