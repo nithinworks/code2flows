@@ -31,12 +31,12 @@ export default function Changelog() {
                       Version 1.0.0
                     </span>
                     <span className="text-sm text-[#001e2b]/40">
-                      March 15, 2024
+                      February 22, 2025
                     </span>
                   </div>
                   <div className="space-y-4">
                     <p className="text-[#001e2b]/70">
-                      Initial release of FlowViz with core features:
+                      Initial release of CodeToFlows with core features:
                     </p>
                     <ul className="list-disc list-inside text-[#001e2b]/70 space-y-2">
                       <li>AI-powered code to flowchart conversion</li>
@@ -45,34 +45,7 @@ export default function Changelog() {
                       <li>Step-by-step execution explanation</li>
                       <li>Custom API key support</li>
                       <li>Local storage for API keys</li>
-                      <li>Daily usage limits and tracking</li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Version 0.9.0 (Beta) */}
-                <div className="border-l-2 border-[#001e2b]/10 pl-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-lg font-semibold text-[#001e2b] font-['Bricolage_Grotesque']">
-                      Version 0.9.0
-                    </span>
-                    <span className="text-sm text-[#001e2b]/40">
-                      March 1, 2024
-                    </span>
-                    <span className="text-[10px] font-medium px-1.5 py-0.5 bg-[#001e2b]/5 text-[#001e2b]/70 rounded-full border border-[#001e2b]/10">
-                      BETA
-                    </span>
-                  </div>
-                  <div className="space-y-4">
-                    <p className="text-[#001e2b]/70">
-                      Beta release with initial testing:
-                    </p>
-                    <ul className="list-disc list-inside text-[#001e2b]/70 space-y-2">
-                      <li>Basic code parsing functionality</li>
-                      <li>Simple flowchart generation</li>
-                      <li>Limited language support</li>
-                      <li>Basic user interface</li>
-                      <li>Performance optimizations</li>
+                      <li>50 Daily usage limits</li>
                     </ul>
                   </div>
                 </div>
@@ -90,10 +63,10 @@ export default function Changelog() {
                     </p>
                     <ul className="list-disc list-inside text-[#001e2b]/70 space-y-2">
                       <li>Advanced customization options for diagrams</li>
-                      <li>Team collaboration features</li>
-                      <li>More programming language support</li>
+                      <li>More programming language files upload support</li>
                       <li>Enhanced AI analysis capabilities</li>
-                      <li>Project management integration</li>
+                      <li>ER Diagram Visualizer</li>
+                      <li>Architecture Diagram Visualizer</li>
                     </ul>
                   </div>
                 </div>

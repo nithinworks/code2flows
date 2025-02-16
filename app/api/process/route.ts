@@ -45,18 +45,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No code provided" }, { status: 400 });
     }
 
-    // Use custom API keys if provided, otherwise use default keys
-    const googleKey = googleApiKey || defaultGoogleKey;
-    const mistralKey = mistralApiKey || defaultMistralKey;
+    // Check if both custom API keys are provided for unlimited usage
+    const hasCustomKeys = !!(googleApiKey && mistralApiKey);
 
-    // Only check daily limit if using default keys
-    if (!googleApiKey && !mistralApiKey) {
+    // Use custom API keys if both are provided, otherwise use default keys
+    const googleKey = hasCustomKeys ? googleApiKey : defaultGoogleKey;
+    const mistralKey = hasCustomKeys ? mistralApiKey : defaultMistralKey;
+
+    // Check daily limit if not using both custom keys
+    if (!hasCustomKeys) {
       const todayCount = await getTodaysDiagramCount();
       if (todayCount >= 50) {
         return NextResponse.json(
           {
             error:
-              "Daily diagram limit reached. Please try again tomorrow or add your own API keys.",
+              "Daily diagram limit reached. Please add both Google and Mistral API keys for unlimited diagrams.",
           },
           { status: 429 }
         );
@@ -66,8 +69,8 @@ export async function POST(request: Request) {
     // Check cache first
     const cachedResult = await getCodeCache(code, fileName);
     if (cachedResult) {
-      // Only increment count if using default keys
-      if (!googleApiKey && !mistralApiKey) {
+      // Only increment count if not using both custom keys
+      if (!hasCustomKeys) {
         await incrementDiagramCount();
         const remainingCount = 50 - (await getTodaysDiagramCount());
         return NextResponse.json({

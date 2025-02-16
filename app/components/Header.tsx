@@ -136,6 +136,18 @@ export const Header = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-6">
+              <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
+                ER Diagram Vizualizer
+                <span className="text-[7px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-[8px] border border-[#001e2b]/20">
+                  SOON
+                </span>
+              </div>
+              <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
+                Architecture Vizualizer
+                <span className="text-[7px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-[8px] border border-[#001e2b]/20">
+                  SOON
+                </span>
+              </div>
               <Link
                 href="/about"
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
@@ -147,12 +159,6 @@ export const Header = () => {
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
               >
                 Contact
-              </Link>
-              <Link
-                href="/changelog"
-                className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
-              >
-                Changelog
               </Link>
             </div>
 
@@ -187,6 +193,18 @@ export const Header = () => {
           {mobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-[#001e2b]/10">
               <div className="flex flex-col gap-4">
+                <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
+                  ER Diagram Vizualizer
+                  <span className="text-[8px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-full border border-[#001e2b]/20">
+                    SOON
+                  </span>
+                </div>
+                <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
+                  Architecture Vizualizer
+                  <span className="text-[8px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-full border border-[#001e2b]/20">
+                    SOON
+                  </span>
+                </div>
                 <Link
                   href="/about"
                   className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
@@ -198,12 +216,6 @@ export const Header = () => {
                   className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
                 >
                   Contact
-                </Link>
-                <Link
-                  href="/changelog"
-                  className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
-                >
-                  Changelog
                 </Link>
                 <button
                   onClick={() => {
@@ -239,15 +251,19 @@ export const Header = () => {
 
             <div className="mb-6">
               <p className="text-[#001e2b]/70 text-sm mb-4">
-                Want to generate unlimited diagrams? Add your own API keys
-                below. You can add either one or both keys.
+                Want to generate unlimited diagrams? Add both your Google and
+                Mistral API keys below. Both keys are required for unlimited
+                access.
               </p>
             </div>
 
             {/* Google API Key */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-[#001e2b] mb-2">
-                Google API Key
+                Google API Key{" "}
+                <span className="text-[#001e2b]/40">
+                  (Required for unlimited)
+                </span>
               </label>
               <input
                 type="password"
@@ -276,7 +292,10 @@ export const Header = () => {
             {/* Mistral API Key */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-[#001e2b] mb-2">
-                Mistral API Key
+                Mistral API Key{" "}
+                <span className="text-[#001e2b]/40">
+                  (Required for unlimited)
+                </span>
               </label>
               <input
                 type="password"

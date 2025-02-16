@@ -312,17 +312,18 @@ export default function Home() {
             {/* Announcement Banner */}
             <div className="bg-[#00ed64]/5 text-[#001e2b] px-4 md:px-5 py-2 rounded-md text-xs md:text-sm mb-8 md:mb-12 flex items-center gap-2 border border-[#00ed64]/20 animate-fade-in">
               <span className="inline-block w-2 h-2 rounded-full bg-[#00ed64]"></span>
-              New: Version 1.0 is now live with AI-powered flowcharts!
+              Completely Free – No Signup Required!
             </div>
 
             {/* Main Heading */}
             <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12 animate-fade-in stagger-1">
-              <h1 className="text-[32px] md:text-[56px] leading-tight font-bold mb-3 md:mb-4 text-[#001e2b] font-bricolage">
+              <h1 className="text-[32px] md:text-[50px] leading-tight font-bold mb-3 md:mb-4 text-[#001e2b] font-bricolage">
                 Code to Flowchart in seconds.
               </h1>
-              <p className="text-lg md:text-xl text-[#001e2b]/60 font-medium">
-                Transform your code into beautiful, interactive flowcharts
-                instantly
+              <p className="text-lg md:text-m text-[#001e2b]/60 font-medium">
+                Understanding code has never been easier! Transform your code
+                into interactive, beautifully structured flowcharts in just a
+                click
               </p>
             </div>
 
@@ -430,8 +431,8 @@ export default function Home() {
                         <>
                           <span>{50 - usageCount} diagrams left today</span>
                           <div className="h-3 w-[1px] bg-[#001e2b]/10"></div>
-                          <span className="text-[#001e2b]/60">
-                            Resets at midnight PT
+                          <span className="text-[#001e2b]/50">
+                            Resets at midnight UTC
                           </span>
                         </>
                       )}
@@ -492,9 +493,9 @@ export default function Home() {
                     1
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    Describe what you
+                    Paste or Upload
                     <br />
-                    want to build.
+                    your code.
                   </h3>
                 </div>
 
@@ -504,9 +505,9 @@ export default function Home() {
                     2
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    Get a first version
+                    AI analyzes and
                     <br />
-                    in seconds.
+                    generates flowchart.
                   </h3>
                 </div>
 
@@ -516,9 +517,9 @@ export default function Home() {
                     3
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    Iterate & improve
+                    Understand
                     <br />
-                    with chat.
+                    your code visually.
                   </h3>
                 </div>
 
@@ -528,9 +529,9 @@ export default function Home() {
                     4
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    One-click to deploy
+                    Export and share
                     <br />
-                    and share.
+                    with your mates.
                   </h3>
                 </div>
               </div>
@@ -542,9 +543,9 @@ export default function Home() {
             <div className="container mx-auto px-4">
               <div className="text-center mb-8 md:mb-16 animate-fade-in">
                 <h2 className="text-3xl md:text-4xl font-bold text-[#001e2b] mb-4 font-bricolage">
-                  A new era for product
+                  Who Can Benefit from
                   <br className="hidden md:block" />
-                  builders and developers.
+                  CodetoFlows?
                 </h2>
               </div>
 
@@ -552,29 +553,29 @@ export default function Home() {
                 {/* Product Teams */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-1 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Product teams
+                    Learn & Understand Code
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
-                    Empower non-technical team members to code. Align on
-                    abstract ideas by building real prototypes.
+                    Break down complex logic into clear, step-by-step flowcharts
+                    to improve comprehension and learning.
                   </p>
                 </div>
 
                 {/* Founders & Indie-hackers */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-2 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Founders, solopreneurs & indie-hackers
+                    Review & Refactor Code
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
-                    Iterate and validate in minutes. Launch a full product in
-                    less than a day.
+                    Analyze execution flow to simplify, clean up, and improve
+                    the efficiency of your code.
                   </p>
                 </div>
 
                 {/* Product Designers */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-3 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Product designers
+                    Document Code Effortlessly
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
                     Bring your design idea to life without tedious prototyping
@@ -585,11 +586,11 @@ export default function Home() {
                 {/* Software Engineers */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-4 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Human software engineers
+                    Explain Code to Others
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
-                    Ship an entire frontend in one prompt. Let Lovable fix bugs
-                    and do your UI edits.
+                    Easily communicate logic and execution flow with teammates,
+                    students, or clients using clear visuals.
                   </p>
                 </div>
               </div>
@@ -612,51 +613,75 @@ export default function Home() {
                   {/* FAQ Item 1 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      What programming languages are supported?
+                      What types of code files can I upload?
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      We support a wide range of languages including Python,
-                      JavaScript, Java, TypeScript, SQL, C++, and more. Our AI
-                      can analyze and visualize code from any text-based
-                      programming language.
+                      You can paste code directly in the input box, and it will
+                      support any programming language. However, if you choose
+                      to upload a file, we currently support .txt, .pdf, .js,
+                      .py, .java, .sql, .cpp, and more. We are constantly
+                      improving support for more formats!
                     </p>
                   </div>
 
                   {/* FAQ Item 2 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      How accurate are the generated flowcharts?
+                      Why is this tool free?
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      Our AI models (Google's Gemini and Mistral) are trained to
-                      understand code structure and logic flow. The generated
-                      flowcharts accurately represent the main execution paths
-                      and logic of your code.
+                      We offer this tool for free to help developers, students,
+                      and professionals better understand their code visually.
+                      We use a daily limit to control API costs, but users can
+                      enter their own API keys for unlimited usage.
                     </p>
                   </div>
 
                   {/* FAQ Item 3 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      Can I customize the generated flowcharts?
+                      Is my uploaded code stored or shared?
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      Yes! You can download the flowcharts as SVG files and
-                      customize them using any vector graphics editor. The
-                      flowcharts are also interactive, allowing you to toggle
-                      between diagram and explanation views.
+                      No, your code is processed securely and never stored or
+                      shared. We respect your privacy and ensure data safety.
                     </p>
                   </div>
 
                   {/* FAQ Item 4 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      Is my code data secure?
+                      Can I use my own API key for unlimited diagrams?
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      Absolutely. We process your code securely and don't store
-                      any sensitive information. You can also use your own API
-                      keys for added security and unlimited generations.
+                      Yes! If you have your own Google Gemini and Mistral API
+                      keys, you can enter them to bypass the daily limit and
+                      generate unlimited diagrams. Your API keys are stored
+                      securely in your local storage and never sent to our
+                      servers.
+                    </p>
+                  </div>
+                  {/* FAQ Item 5 */}
+                  <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
+                    <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
+                      What programming languages do you support?
+                    </h3>
+                    <p className="text-[#001e2b]/70">
+                      Our tool supports any programming language when pasting
+                      code directly.
+                    </p>
+                  </div>
+                  {/* FAQ Item 6 */}
+                  <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
+                    <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
+                      Can I use my own API key for unlimited diagrams?
+                    </h3>
+                    <p className="text-[#001e2b]/70">
+                      Yes! If you have your own Google Gemini and Mistral API
+                      keys, you can enter them to bypass the daily limit and
+                      generate unlimited diagrams. Your API keys are stored
+                      securely in your local storage and never sent to our
+                      servers.
                     </p>
                   </div>
                 </div>
