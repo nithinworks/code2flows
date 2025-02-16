@@ -3,6 +3,7 @@
 import { Header } from "../components/Header";
 import { BackgroundGradient } from "../components/BackgroundGradient";
 import { GridPattern } from "../components/GridPattern";
+import { Footer } from "../components/Footer";
 import { FiMail } from "react-icons/fi";
 
 export default function About() {
@@ -20,10 +21,10 @@ export default function About() {
         <GridPattern />
       </div>
 
-      <div className="h-full w-full flex md:items-center md:justify-center antialiased relative overflow-hidden">
+      <div className="min-h-screen flex flex-col antialiased relative">
         <Header />
 
-        <div className="relative z-10 w-full mt-32">
+        <div className="flex-grow relative z-10 w-full mt-32">
           <div className="container mx-auto px-4 py-16">
             <div className="max-w-3xl mx-auto">
               <h1 className="text-4xl font-bold text-[#001e2b] mb-8 font-bricolage">
@@ -71,7 +72,7 @@ export default function About() {
                   About the Creator
                 </h2>
                 <p className="text-[#001e2b]/70 mb-6">
-                  Hi, I’m Naga Nithin, the developer behind CodeToFlows. As a
+                  Hi, I'm Naga Nithin, the developer behind CodeToFlows. As a
                   passionate software engineer, I built this tool to help
                   developers and students better visualize their code and make
                   learning and debugging easier. I'm always open to feedback,
@@ -90,6 +91,8 @@ export default function About() {
             </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     </main>
   );
