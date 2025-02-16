@@ -651,8 +651,10 @@ export default function Home() {
                       Is my uploaded code stored or shared?
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      No, your code is processed securely and never stored or
-                      shared. We respect your privacy and ensure data safety.
+                      No, your code is processed securely and never shared. The
+                      code is stored in database to eliminate duplicate api
+                      calling and it will be auto-cleaned every 6 hours. We
+                      respect your privacy and ensure data safety.
                     </p>
                   </div>
 

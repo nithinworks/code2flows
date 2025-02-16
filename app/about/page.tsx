@@ -60,8 +60,7 @@ export default function About() {
                     execution at a glance.
                   </li>
                   <li>
-                    <b>Completely Private</b> – Your code is never stored or
-                    shared.
+                    <b>Completely Private</b> – Your code is never shared.
                   </li>
                   <li>
                     <b>Free to Use</b> – Generate up to 50 diagrams per day or
