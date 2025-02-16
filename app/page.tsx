@@ -421,41 +421,44 @@ export default function Home() {
                       "Generate Flowchart"
                     )}
                   </button>
+                </form>
 
-                  {/* Usage Counter Badge */}
-                  <div className="mt-3 flex items-center justify-center gap-1.5">
-                    <div className="bg-[#001e2b]/5 text-[#001e2b] px-2.5 py-1 rounded-full text-xs border border-[#001e2b]/10 flex flex-wrap items-center gap-1.5 text-center">
-                      {hasCustomKeys ? (
-                        <span>Unlimited diagrams (using custom API keys)</span>
-                      ) : (
-                        <>
-                          <span className="whitespace-nowrap">
-                            {50 - usageCount} diagrams left today
-                          </span>
-                          <div className="h-3 w-[1px] bg-[#001e2b]/10 hidden sm:block"></div>
-                          <span className="text-[#001e2b]/50 whitespace-nowrap hidden sm:inline">
-                            Resets at midnight UTC
-                          </span>
-                          <span className="text-[#001e2b]/50 whitespace-nowrap sm:hidden text-[10px]">
-                            (Resets at midnight UTC)
-                          </span>
-                        </>
-                      )}
-                    </div>
-                    <div className="group relative">
-                      <button className="w-4 h-4 rounded-full border border-[#001e2b]/20 text-[#001e2b]/40 flex items-center justify-center text-xs hover:border-[#001e2b]/40 hover:text-[#001e2b]/60 transition-colors">
-                        i
-                      </button>
-                      <div className="absolute bottom-full mb-2 right-0 w-60 p-2.5 bg-white rounded-lg shadow-lg border border-[#001e2b] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                        <p className="text-xs text-[#001e2b]/80">
-                          {hasCustomKeys
-                            ? "You're using your own API keys, so you have unlimited diagram generations."
-                            : "We limit generations to 50 per day to ensure fair usage and maintain service quality for all users. Want unlimited generations? Add your own API keys."}
-                        </p>
-                      </div>
+                {/* Usage Counter Badge - Moved outside form */}
+                <div className="mt-3 flex items-center justify-center gap-1.5">
+                  <div className="bg-[#001e2b]/5 text-[#001e2b] px-2.5 py-1 rounded-full text-xs border border-[#001e2b]/10 flex flex-wrap items-center gap-1.5 text-center">
+                    {hasCustomKeys ? (
+                      <span>Unlimited diagrams (using custom API keys)</span>
+                    ) : (
+                      <>
+                        <span className="whitespace-nowrap">
+                          {50 - usageCount} diagrams left today
+                        </span>
+                        <div className="h-3 w-[1px] bg-[#001e2b]/10 hidden sm:block"></div>
+                        <span className="text-[#001e2b]/50 whitespace-nowrap hidden sm:inline">
+                          Resets at midnight UTC
+                        </span>
+                        <span className="text-[#001e2b]/50 whitespace-nowrap sm:hidden text-[10px]">
+                          (Resets at midnight UTC)
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div className="group relative">
+                    <button
+                      type="button"
+                      className="w-4 h-4 rounded-full border border-[#001e2b]/20 text-[#001e2b]/40 flex items-center justify-center text-xs hover:border-[#001e2b]/40 hover:text-[#001e2b]/60 transition-colors"
+                    >
+                      i
+                    </button>
+                    <div className="absolute bottom-full mb-2 right-0 w-60 p-2.5 bg-white rounded-lg shadow-lg border border-[#001e2b] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                      <p className="text-xs text-[#001e2b]/80">
+                        {hasCustomKeys
+                          ? "You're using your own API keys, so you have unlimited diagram generations."
+                          : "We limit generations to 50 per day to ensure fair usage and maintain service quality for all users. Want unlimited generations? Add your own API keys."}
+                      </p>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
 
@@ -679,14 +682,12 @@ export default function Home() {
                   {/* FAQ Item 6 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      Can I use my own API key for unlimited diagrams?
+                      How long does it take to generate a flowchart?
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      Yes! If you have your own Google Gemini and Mistral API
-                      keys, you can enter them to bypass the daily limit and
-                      generate unlimited diagrams. Your API keys are stored
-                      securely in your local storage and never sent to our
-                      servers.
+                      The process is almost instant! Once you paste or upload
+                      your file, AI analyzes it and generates a flowchart in
+                      just a few seconds.
                     </p>
                   </div>
                 </div>

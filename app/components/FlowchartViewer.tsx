@@ -187,7 +187,7 @@ export default function FlowchartViewer({
             title="Download SVG"
           >
             <FiDownload className="w-4 h-4" />
-            <span className="text-sm">Download SVG</span>
+            <span className="text-sm text-[0.8rem]">Download SVG</span>
           </button>
           <button
             onClick={copySVG}
@@ -199,7 +199,9 @@ export default function FlowchartViewer({
             ) : (
               <FiCopy className="w-4 h-4" />
             )}
-            <span className="text-sm">{copied ? "Copied!" : "Copy SVG"}</span>
+            <span className="text-sm text-[0.8rem]">
+              {copied ? "Copied!" : "Copy SVG"}
+            </span>
           </button>
         </div>
 
