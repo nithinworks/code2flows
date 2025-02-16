@@ -424,15 +424,20 @@ export default function Home() {
 
                   {/* Usage Counter Badge */}
                   <div className="mt-3 flex items-center justify-center gap-1.5">
-                    <div className="bg-[#001e2b]/5 text-[#001e2b] px-2.5 py-0.5 rounded-full text-xs border border-[#001e2b]/10 flex items-center gap-1.5">
+                    <div className="bg-[#001e2b]/5 text-[#001e2b] px-2.5 py-1 rounded-full text-xs border border-[#001e2b]/10 flex flex-wrap items-center gap-1.5 text-center">
                       {hasCustomKeys ? (
                         <span>Unlimited diagrams (using custom API keys)</span>
                       ) : (
                         <>
-                          <span>{50 - usageCount} diagrams left today</span>
-                          <div className="h-3 w-[1px] bg-[#001e2b]/10"></div>
-                          <span className="text-[#001e2b]/50">
+                          <span className="whitespace-nowrap">
+                            {50 - usageCount} diagrams left today
+                          </span>
+                          <div className="h-3 w-[1px] bg-[#001e2b]/10 hidden sm:block"></div>
+                          <span className="text-[#001e2b]/50 whitespace-nowrap hidden sm:inline">
                             Resets at midnight UTC
+                          </span>
+                          <span className="text-[#001e2b]/50 whitespace-nowrap sm:hidden text-[10px]">
+                            (Resets at midnight UTC)
                           </span>
                         </>
                       )}
