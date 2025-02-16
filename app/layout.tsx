@@ -49,7 +49,7 @@ export const metadata: Metadata = {
       "Transform your code into beautiful, interactive flowcharts instantly with AI-powered visualization. Support for Python, JavaScript, Java, SQL, and more.",
     images: [
       {
-        url: "/Codetoflows-OG.jpg",
+        url: "https://codetoflows.vercel.app/Codetoflows-OG.jpg",
         width: 1200,
         height: 630,
         alt: "CodetoFlows - Code to Flowchart Visualization",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "CodetoFlows - Transform Code into Beautiful Flowcharts Instantly",
     description:
       "Transform your code into beautiful, interactive flowcharts instantly with AI-powered visualization.",
-    images: ["/Codetoflows-OG.jpg"],
+    images: ["https://codetoflows.com/Codetoflows-OG.jpg"],
     creator: "@codetoflows",
   },
   icons: {
