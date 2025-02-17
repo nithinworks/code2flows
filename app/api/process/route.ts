@@ -160,15 +160,26 @@ ${code}`;
 3. Keep node text concise (max 4-5 words)
 4. Use only --> for connections
 5. Each node and connection must be on its own line
-6. No special characters in node text
+6. Format programming concepts as words:
+   - Instead of array[]: use "array of"
+   - Instead of function(): use "function"
+   - Instead of object.property: use "object property"
+   - Instead of map<key,value>: use "map of"
+   - Instead of array.push(): use "add to array"
+7. No special characters allowed in node text:
+   - No brackets [], (), {}, <>
+   - No dots or periods
+   - No quotation marks
+   - No mathematical symbols
+   - No programming operators
 
 Example of correct format:
 A[[Start]]
 A --> B[(Create Database)]
-B --> C([Process Data])
+B --> C([Process Array of Items])
 C --> D{Check Status}
-D -->|Yes| E([Continue])
-D -->|No| F([Stop])
+D -->|Yes| E([Call User Function])
+D -->|No| F([Get Object Property])
 F --> Z[[End]]
 
 Rules for this specific flowchart:
