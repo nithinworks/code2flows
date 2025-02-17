@@ -268,11 +268,11 @@ export const Header = () => {
               <input
                 type="password"
                 placeholder="Enter your Google API key"
-                className={`w-full px-3 py-2 rounded-md border-2 ${
+                className={`w-full px-3 py-2 rounded-md border-2 text-[#001e2b] ${
                   validationError.google
                     ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                     : "border-[#001e2b]/20 focus:border-[#00ed64] focus:ring-[#00ed64]"
-                } transition`}
+                } transition placeholder-[#001e2b]/30`}
                 onChange={(e) => {
                   setGoogleKey(e.target.value);
                   setValidationError((prev) => ({
@@ -300,11 +300,11 @@ export const Header = () => {
               <input
                 type="password"
                 placeholder="Enter your Mistral API key"
-                className={`w-full px-3 py-2 rounded-md border-2 ${
+                className={`w-full px-3 py-2 rounded-md border-2 text-[#001e2b] ${
                   validationError.mistral
                     ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                     : "border-[#001e2b]/20 focus:border-[#00ed64] focus:ring-[#00ed64]"
-                } transition`}
+                } transition placeholder-[#001e2b]/30`}
                 onChange={(e) => {
                   setMistralKey(e.target.value);
                   setValidationError((prev) => ({
