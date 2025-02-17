@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { plusJakartaSans, bricolageGrotesque } from "./fonts";
 import Loading from "./loading";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -96,6 +97,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Analytics />
       </body>
     </html>
   );

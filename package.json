@@ -12,6 +12,7 @@
     "@google/generative-ai": "^0.21.0",
     "@mistralai/mistralai": "^1.5.0",
     "@supabase/supabase-js": "^2.48.1",
+    "@vercel/analytics": "^1.5.0",
     "framer-motion": "^12.4.3",
     "mermaid": "^11.4.1",
     "next": "15.1.7",
