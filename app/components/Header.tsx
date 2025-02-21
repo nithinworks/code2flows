@@ -1,116 +1,47 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-import { FiKey, FiMenu, FiX } from "react-icons/fi";
-import { useState, useEffect } from "react";
+import { FiMenu, FiX, FiUser, FiLogOut } from "react-icons/fi";
+import { useState, useEffect, useRef } from "react";
+import { useAuth } from "@/lib/context/auth";
+import AuthModal from "./AuthModal";
+import ProfileModal from "./ProfileModal";
 
 export const Header = () => {
+  const { user, credits, signOut } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [hasApiKeys, setHasApiKeys] = useState(false);
-  const [googleKey, setGoogleKey] = useState("");
-  const [mistralKey, setMistralKey] = useState("");
-  const [validating, setValidating] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [validationError, setValidationError] = useState<{
-    google?: string;
-    mistral?: string;
-  }>({});
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedGoogleKey = localStorage.getItem("google_api_key");
-    const savedMistralKey = localStorage.getItem("mistral_api_key");
-    setGoogleKey(savedGoogleKey || "");
-    setMistralKey(savedMistralKey || "");
-    setHasApiKeys(!!(savedGoogleKey || savedMistralKey));
   }, []);
 
-  // Don't render anything until mounted to prevent hydration issues
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowProfileMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   if (!mounted) {
     return null;
   }
-
-  const validateGoogleKey = async (key: string) => {
-    if (!key) return true; // Skip validation if key is empty
-    try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro?key=${key}`,
-        {
-          method: "GET",
-        }
-      );
-      return response.ok;
-    } catch (error) {
-      return false;
-    }
-  };
-
-  const validateMistralKey = async (key: string) => {
-    if (!key) return true; // Skip validation if key is empty
-    try {
-      const response = await fetch("https://api.mistral.ai/v1/models", {
-        headers: {
-          Authorization: `Bearer ${key}`,
-        },
-      });
-      return response.ok;
-    } catch (error) {
-      return false;
-    }
-  };
-
-  const handleSave = async () => {
-    setValidating(true);
-    setValidationError({});
-
-    const errors: { google?: string; mistral?: string } = {};
-
-    // Validate Google API Key
-    if (googleKey) {
-      const isGoogleValid = await validateGoogleKey(googleKey);
-      if (!isGoogleValid) {
-        errors.google = "Invalid Google API key";
-      }
-    }
-
-    // Validate Mistral API Key
-    if (mistralKey) {
-      const isMistralValid = await validateMistralKey(mistralKey);
-      if (!isMistralValid) {
-        errors.mistral = "Invalid Mistral API key";
-      }
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setValidationError(errors);
-      setValidating(false);
-      return;
-    }
-
-    // Save valid keys to localStorage
-    if (googleKey) {
-      localStorage.setItem("google_api_key", googleKey);
-    } else {
-      localStorage.removeItem("google_api_key");
-    }
-
-    if (mistralKey) {
-      localStorage.setItem("mistral_api_key", mistralKey);
-    } else {
-      localStorage.removeItem("mistral_api_key");
-    }
-
-    setHasApiKeys(!!(googleKey || mistralKey));
-    setValidating(false);
-    setShowModal(false);
-  };
 
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#fbf9f6] border-b-2 border-[#001e2b]">
         <nav className="container mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <div className="flex items-center gap-2">
               <Link
                 href="/"
@@ -134,48 +65,84 @@ export const Header = () => {
               </span>
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-6">
-              <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
-                ER Diagram Vizualizer
-                <span className="text-[7px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-[8px] border border-[#001e2b]/20">
-                  SOON
-                </span>
-              </div>
-              <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
-                Architecture Vizualizer
-                <span className="text-[7px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-[8px] border border-[#001e2b]/20">
-                  SOON
-                </span>
-              </div>
               <Link
-                href="/about"
+                href="/"
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
               >
-                About
+                Code Vizualizer
               </Link>
               <Link
-                href="/contact"
+                href="/er-diagram"
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
               >
-                Contact
+                ER Diagram Vizualizer
+              </Link>
+              <Link
+                href="/architecture"
+                className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
+              >
+                Architecture Vizualizer
+              </Link>
+              <Link
+                href="/credits"
+                className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
+              >
+                Credits Pack
               </Link>
             </div>
 
-            {/* Right side with API Key button */}
             <div className="flex items-center gap-3">
-              <div className="hidden md:block bg-[#001e2b]/5 text-[#001e2b] px-2.5 py-1 rounded-full text-xs border border-[#001e2b]/10">
-                Want unlimited diagrams?
-              </div>
-              <button
-                onClick={() => setShowModal(true)}
-                className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold"
-              >
-                <FiKey className="w-4 h-4" />
-                {hasApiKeys ? "Manage API Keys" : "Add API Keys"}
-              </button>
+              {user ? (
+                <>
+                  <div className="hidden md:flex items-center gap-2">
+                    <span className="px-3 py-1 bg-[#00ed64]/10 text-[#001e2b] text-sm font-semibold rounded-full border border-[#00ed64]">
+                      {credits} credits
+                    </span>
+                    <div className="relative" ref={profileMenuRef}>
+                      <button
+                        onClick={() => setShowProfileMenu(!showProfileMenu)}
+                        className="p-2 rounded-md border-2 border-[#001e2b] text-[#001e2b] hover:bg-[#001e2b]/5 transition"
+                      >
+                        <FiUser className="w-4 h-4" />
+                      </button>
 
-              {/* Mobile Menu Button */}
+                      {showProfileMenu && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md border-2 border-[#001e2b] shadow-lg py-1">
+                          <button
+                            onClick={() => {
+                              setIsProfileModalOpen(true);
+                              setShowProfileMenu(false);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-[#001e2b]/70 hover:text-[#001e2b] hover:bg-[#001e2b]/5 transition flex items-center gap-2"
+                          >
+                            <FiUser className="w-4 h-4" />
+                            Profile
+                          </button>
+                          <button
+                            onClick={() => {
+                              signOut();
+                              setShowProfileMenu(false);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-[#001e2b]/70 hover:text-[#001e2b] hover:bg-[#001e2b]/5 transition flex items-center gap-2"
+                          >
+                            <FiLogOut className="w-4 h-4" />
+                            Sign Out
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold"
+                >
+                  Sign In
+                </button>
+              )}
+
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="md:hidden p-2 text-[#001e2b] hover:bg-[#001e2b]/5 rounded-md transition"
@@ -189,171 +156,68 @@ export const Header = () => {
             </div>
           </div>
 
-          {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-[#001e2b]/10">
               <div className="flex flex-col gap-4">
-                <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
+                <Link
+                  href="/er-diagram"
+                  className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
+                >
                   ER Diagram Vizualizer
-                  <span className="text-[8px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-full border border-[#001e2b]/20">
-                    SOON
-                  </span>
-                </div>
+                </Link>
                 <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
                   Architecture Vizualizer
                   <span className="text-[8px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-full border border-[#001e2b]/20">
                     SOON
                   </span>
                 </div>
-                <Link
-                  href="/about"
-                  className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/contact"
-                  className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
-                >
-                  Contact
-                </Link>
-                <button
-                  onClick={() => {
-                    setShowModal(true);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold w-full justify-center"
-                >
-                  <FiKey className="w-4 h-4" />
-                  {hasApiKeys ? "Manage API Keys" : "Add API Keys"}
-                </button>
+
+                {user ? (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-[#00ed64]/10 text-[#001e2b] text-sm font-semibold rounded-full border border-[#00ed64]">
+                        {credits} credits
+                      </span>
+                    </div>
+                    <div className="text-sm text-[#001e2b]/70 px-1">
+                      {user.email}
+                    </div>
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold w-full justify-center"
+                    >
+                      <FiLogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setIsAuthModalOpen(true);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold w-full justify-center"
+                  >
+                    Sign In
+                  </button>
+                )}
               </div>
             </div>
           )}
         </nav>
       </header>
 
-      {/* API Key Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl border-2 border-[#001e2b] w-full max-w-lg p-4 md:p-6 shadow-lg">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg md:text-xl font-semibold text-[#001e2b] font-bricolage">
-                API Key Management
-              </h2>
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-[#001e2b]/60 hover:text-[#001e2b] transition"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="mb-6">
-              <p className="text-[#001e2b]/70 text-sm mb-4">
-                Want to generate unlimited diagrams? Add both your Google and
-                Mistral API keys below. Both keys are required for unlimited
-                access.
-              </p>
-            </div>
-
-            {/* Google API Key */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-[#001e2b] mb-2">
-                Google API Key{" "}
-                <span className="text-[#001e2b]/40">
-                  (Required for unlimited)
-                </span>
-              </label>
-              <input
-                type="password"
-                placeholder="Enter your Google API key"
-                className={`w-full px-3 py-2 rounded-md border-2 text-[#001e2b] ${
-                  validationError.google
-                    ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                    : "border-[#001e2b]/20 focus:border-[#00ed64] focus:ring-[#00ed64]"
-                } transition placeholder-[#001e2b]/30`}
-                onChange={(e) => {
-                  setGoogleKey(e.target.value);
-                  setValidationError((prev) => ({
-                    ...prev,
-                    google: undefined,
-                  }));
-                }}
-                value={googleKey}
-              />
-              {validationError.google && (
-                <p className="mt-1 text-xs text-red-500">
-                  {validationError.google}
-                </p>
-              )}
-            </div>
-
-            {/* Mistral API Key */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-[#001e2b] mb-2">
-                Mistral API Key{" "}
-                <span className="text-[#001e2b]/40">
-                  (Required for unlimited)
-                </span>
-              </label>
-              <input
-                type="password"
-                placeholder="Enter your Mistral API key"
-                className={`w-full px-3 py-2 rounded-md border-2 text-[#001e2b] ${
-                  validationError.mistral
-                    ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                    : "border-[#001e2b]/20 focus:border-[#00ed64] focus:ring-[#00ed64]"
-                } transition placeholder-[#001e2b]/30`}
-                onChange={(e) => {
-                  setMistralKey(e.target.value);
-                  setValidationError((prev) => ({
-                    ...prev,
-                    mistral: undefined,
-                  }));
-                }}
-                value={mistralKey}
-              />
-              {validationError.mistral && (
-                <p className="mt-1 text-xs text-red-500">
-                  {validationError.mistral}
-                </p>
-              )}
-            </div>
-
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => {
-                  localStorage.removeItem("google_api_key");
-                  localStorage.removeItem("mistral_api_key");
-                  setGoogleKey("");
-                  setMistralKey("");
-                  setHasApiKeys(false);
-                  setValidationError({});
-                  setShowModal(false);
-                }}
-                className="px-4 py-2 text-sm font-medium text-[#001e2b]/70 hover:text-[#001e2b] transition"
-              >
-                Reset to Default
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={validating}
-                className="px-4 py-2 bg-[#00ed64] text-[#001e2b] rounded-md text-sm font-semibold border-2 border-[#001e2b] hover:bg-[#00ed64]/90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                {validating ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-[#001e2b] border-t-transparent rounded-full animate-spin"></span>
-                    Validating...
-                  </>
-                ) : (
-                  "Save"
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
     </>
   );
 };

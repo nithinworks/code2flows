@@ -9,6 +9,10 @@ import { BackgroundGradient } from "./components/BackgroundGradient";
 import { GridPattern } from "./components/GridPattern";
 import "./animations.css";
 import Script from "next/script";
+import { useAuth } from "@/lib/context/auth";
+import { supabase } from "@/lib/supabase";
+import AuthModal from "./components/AuthModal";
+import { toast } from "react-hot-toast";
 
 // Dynamically import FlowchartViewer with loading fallback
 const FlowchartViewer = dynamic(() => import("./components/FlowchartViewer"), {
@@ -22,6 +26,7 @@ const FlowchartViewer = dynamic(() => import("./components/FlowchartViewer"), {
 });
 
 export default function Home() {
+  const { user, refreshCredits, checkEmailVerified } = useAuth();
   const [fileContent, setFileContent] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -30,44 +35,12 @@ export default function Home() {
   const [flowchartData, setFlowchartData] = useState<{
     executionSteps: string;
     mermaidChart: string;
-    usageCount: number;
   } | null>(null);
 
-  const [usageCount, setUsageCount] = useState<number>(0);
-  const [hasCustomKeys, setHasCustomKeys] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const resultRef = useRef<HTMLDivElement>(null);
-
-  // Check for API keys on client side only
-  useEffect(() => {
-    const googleKey = localStorage.getItem("google_api_key");
-    const mistralKey = localStorage.getItem("mistral_api_key");
-    setHasCustomKeys(!!(googleKey || mistralKey));
-  }, []);
-
-  // Fetch initial usage count
-  useEffect(() => {
-    const fetchUsageCount = async () => {
-      try {
-        const response = await fetch("/api/usage");
-        if (response.ok) {
-          const data = await response.json();
-          setUsageCount(data.usageCount);
-        }
-      } catch (error) {
-        console.error("Failed to fetch usage count:", error);
-      }
-    };
-    fetchUsageCount();
-  }, []);
-
-  // Update usage count when flowchart data changes
-  useEffect(() => {
-    if (flowchartData?.usageCount !== undefined) {
-      setUsageCount(flowchartData.usageCount);
-    }
-  }, [flowchartData]);
 
   const allowedFileTypes = [
     ".txt",
@@ -152,50 +125,34 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fileContent) {
-      setError("Please provide some code or upload a file.");
+      setError("Please provide some code to analyze.");
       return;
     }
-
-    // Code validation
-    const codeIndicators = [
-      // Keywords that indicate code
-      /(function|class|def|import|from|var|let|const|if|for|while)\s/,
-      // Common syntax patterns
-      /[{};()\[\]]/,
-      // Assignments and operations
-      /(\w+\s*=\s*|=>|->|\+=|-=|\*=|\/=)/,
-      // Indentation patterns (common in Python)
-      /^(\s{2,}|\t+)\w+/m,
-      // Method/function calls
-      /\w+\((.*?)\)/,
-      // Comments
-      /(\/\/|#|\/\*|\*\/|""")/,
-    ];
-
-    const isLikelyCode = codeIndicators.some((pattern) =>
-      pattern.test(fileContent)
-    );
-
-    if (!isLikelyCode) {
-      setError(
-        "Please provide valid code. Natural language or plain text is not supported."
-      );
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-    setLoadingStep("Analyzing code...");
-
     try {
-      // Simulate code analysis step
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setLoadingStep("Processing diagram...");
+      if (!user) {
+        setIsAuthModalOpen(true);
+        return;
+      }
+
+      if (!checkEmailVerified()) {
+        return;
+      }
+
+      setLoading(true);
+      setError("");
+      setLoadingStep("Analyzing code...");
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
       const response = await fetch("/api/process", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(session?.access_token && {
+            Authorization: `Bearer ${session.access_token}`,
+          }),
         },
         body: JSON.stringify({
           code: fileContent,
@@ -203,23 +160,23 @@ export default function Home() {
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to process code");
+        throw new Error(data.error || "Failed to process code");
       }
 
-      const data = await response.json();
-      setFlowchartData(data);
+      if (user?.id) {
+        await refreshCredits();
+      }
 
-      // Scroll to result after a short delay
-      setTimeout(() => {
-        resultRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 100);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to process code");
+      setFlowchartData(data);
+      resultRef.current?.scrollIntoView({ behavior: "smooth" });
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Failed to process code"
+      );
+      return;
     } finally {
       setLoading(false);
       setLoadingStep("");
@@ -338,33 +295,16 @@ export default function Home() {
                     <div className="relative group">
                       <textarea
                         placeholder="Paste your code here..."
-                        className={`w-full h-64 p-4 bg-white text-[#001e2b] rounded-md border-2 border-[#001e2b] focus:border-[#00ed64] focus:ring-1 focus:ring-[#00ed64] transition placeholder-[#001e2b]/30 ${
-                          !hasCustomKeys && usageCount >= 50
-                            ? "cursor-not-allowed opacity-50"
-                            : ""
-                        }`}
+                        className="w-full h-64 p-4 bg-white text-[#001e2b] rounded-md border-2 border-[#001e2b] focus:border-[#00ed64] focus:ring-1 focus:ring-[#00ed64] transition placeholder-[#001e2b]/30"
                         value={fileContent}
                         onChange={handleCodeInput}
-                        disabled={!hasCustomKeys && usageCount >= 50}
                       />
-                      {!hasCustomKeys && usageCount >= 50 && (
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <div className="bg-white px-4 py-2 rounded-lg shadow-lg border-2 border-[#001e2b] text-sm text-[#001e2b]">
-                            🎨 Daily limit reached! Add your API keys for
-                            unlimited diagrams.
-                          </div>
-                        </div>
-                      )}
                     </div>
 
                     <div className="flex items-center justify-center w-full">
                       <label
                         className={`flex flex-col items-center justify-center w-full h-32 border-2 border-[#001e2b] border-dashed rounded-md cursor-pointer hover:border-[#001e2b]/40 bg-[#001e2b]/5 transition group relative ${
                           isDragging ? "border-[#001e2b] bg-[#001e2b]/10" : ""
-                        } ${
-                          !hasCustomKeys && usageCount >= 50
-                            ? "cursor-not-allowed opacity-50"
-                            : ""
                         }`}
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
@@ -391,7 +331,6 @@ export default function Home() {
                           className="hidden"
                           onChange={handleFileUpload}
                           accept={allowedFileTypes.join(",")}
-                          disabled={!hasCustomKeys && usageCount >= 50}
                         />
                       </label>
                     </div>
@@ -405,11 +344,9 @@ export default function Home() {
 
                   <button
                     type="submit"
-                    disabled={loading || (!hasCustomKeys && usageCount >= 50)}
+                    disabled={loading}
                     className={`w-full py-3 px-4 bg-[#00ed64] text-[#001e2b] font-semibold rounded-md border-2 border-[#001e2b] transition-all hover:bg-[#00ed64]/90 ${
-                      loading || (!hasCustomKeys && usageCount >= 50)
-                        ? "opacity-50 cursor-not-allowed"
-                        : ""
+                      loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >
                     {loading ? (
@@ -417,48 +354,13 @@ export default function Home() {
                         <span className="w-4 h-4 border-2 border-[#001e2b] border-t-transparent rounded-full animate-spin"></span>
                         <span>{loadingStep}</span>
                       </div>
-                    ) : (
+                    ) : user ? (
                       "Generate Flowchart"
+                    ) : (
+                      "Sign in to Generate"
                     )}
                   </button>
                 </form>
-
-                {/* Usage Counter Badge - Moved outside form */}
-                <div className="mt-3 flex items-center justify-center gap-1.5">
-                  <div className="bg-[#001e2b]/5 text-[#001e2b] px-2.5 py-1 rounded-full text-xs border border-[#001e2b]/10 flex flex-wrap items-center gap-1.5 text-center">
-                    {hasCustomKeys ? (
-                      <span>Unlimited diagrams (using custom API keys)</span>
-                    ) : (
-                      <>
-                        <span className="whitespace-nowrap">
-                          {50 - usageCount} diagrams left today
-                        </span>
-                        <div className="h-3 w-[1px] bg-[#001e2b]/10 hidden sm:block"></div>
-                        <span className="text-[#001e2b]/50 whitespace-nowrap hidden sm:inline">
-                          Resets at midnight UTC
-                        </span>
-                        <span className="text-[#001e2b]/50 whitespace-nowrap sm:hidden text-[10px]">
-                          (Resets at midnight UTC)
-                        </span>
-                      </>
-                    )}
-                  </div>
-                  <div className="group relative">
-                    <button
-                      type="button"
-                      className="w-4 h-4 rounded-full border border-[#001e2b]/20 text-[#001e2b]/40 flex items-center justify-center text-xs hover:border-[#001e2b]/40 hover:text-[#001e2b]/60 transition-colors"
-                    >
-                      i
-                    </button>
-                    <div className="absolute bottom-full mb-2 right-0 w-60 p-2.5 bg-white rounded-lg shadow-lg border border-[#001e2b] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                      <p className="text-xs text-[#001e2b]/80">
-                        {hasCustomKeys
-                          ? "You're using your own API keys, so you have unlimited diagram generations."
-                          : "We limit generations to 50 per day to ensure fair usage and maintain service quality for all users. Want unlimited generations? Add your own API keys."}
-                      </p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -723,6 +625,10 @@ export default function Home() {
         {/* Footer */}
         <Footer />
       </div>
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </main>
   );
 }

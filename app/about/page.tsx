@@ -67,25 +67,6 @@ export default function About() {
                     use your own API key for unlimited access.
                   </li>
                 </ul>
-                <h2 className="text-2xl font-semibold text-[#001e2b] mt-12 mb-4 font-bricolage">
-                  About the Creator
-                </h2>
-                <p className="text-[#001e2b]/70 mb-6">
-                  Hi, I'm Naga Nithin, the developer behind CodeToFlows. As a
-                  passionate software engineer, I built this tool to help
-                  developers and students better visualize their code and make
-                  learning and debugging easier. I'm always open to feedback,
-                  and new ideas! Feel free to connect with me:
-                </p>
-                <div className="flex items-center gap-4 mb-8">
-                  <button
-                    onClick={handleContact}
-                    className="flex items-center gap-2 px-6 py-3 bg-[#00ed64] text-[#001e2b] rounded-md border-2 border-[#001e2b] hover:bg-[#00ed64]/90 transition font-semibold"
-                  >
-                    <FiMail className="w-5 h-5" />
-                    Contact Me
-                  </button>
-                </div>
               </div>
             </div>
           </div>

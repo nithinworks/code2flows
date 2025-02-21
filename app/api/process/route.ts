@@ -1,16 +1,28 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Mistral } from "@mistralai/mistralai";
 import { NextResponse } from "next/server";
-import {
-  getTodaysDiagramCount,
-  incrementDiagramCount,
-  getCodeCache,
-  saveToCodeCache,
-} from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
+import { getCodeCache, saveToCodeCache } from "@/lib/supabase";
 
-// Initialize AI clients with default keys
-const defaultGoogleKey = process.env.GOOGLE_API_KEY || "";
-const defaultMistralKey = process.env.MISTRAL_API_KEY || "";
+// Initialize Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error("Missing Supabase environment variables");
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Initialize AI clients with default keys only
+const googleKey = process.env.GOOGLE_API_KEY || "";
+const mistralKey = process.env.MISTRAL_API_KEY || "";
+
+// Initialize AI clients
+const genAI = new GoogleGenerativeAI(googleKey);
+const mistralClient = new Mistral({
+  apiKey: mistralKey,
+});
 
 // Clean mermaid chart string by removing markdown code blocks and extra whitespace
 function cleanMermaidChart(chart: string): string {
@@ -38,66 +50,94 @@ function cleanExecutionSteps(steps: string): string {
 
 export async function POST(request: Request) {
   try {
-    const { code, fileName, googleApiKey, mistralApiKey } =
-      await request.json();
+    const { code, fileName } = await request.json();
 
-    if (!code) {
-      return NextResponse.json({ error: "No code provided" }, { status: 400 });
+    // Get user session from request
+    const authHeader = request.headers.get("authorization");
+    console.log("Auth Header:", authHeader);
+
+    let userId = null;
+    let userCredits = null;
+    let creditDeducted = false;
+
+    // Check for authentication
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: "Please sign in to generate flowcharts" },
+        { status: 401 }
+      );
     }
 
-    // Check if both custom API keys are provided for unlimited usage
-    const hasCustomKeys = !!(googleApiKey && mistralApiKey);
+    // Verify user and check credits
+    try {
+      const token = authHeader.replace("Bearer ", "");
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser(token);
 
-    // Use custom API keys if both are provided, otherwise use default keys
-    const googleKey = hasCustomKeys ? googleApiKey : defaultGoogleKey;
-    const mistralKey = hasCustomKeys ? mistralApiKey : defaultMistralKey;
+      if (userError || !user) {
+        throw new Error("Invalid user token");
+      }
 
-    // Check daily limit if not using both custom keys
-    if (!hasCustomKeys) {
-      const todayCount = await getTodaysDiagramCount();
-      if (todayCount >= 50) {
+      userId = user.id;
+
+      // Get user credits
+      const { data: userData, error: creditError } = await supabase
+        .from("users")
+        .select("credits")
+        .eq("id", userId)
+        .single();
+
+      if (creditError) {
+        throw new Error("Failed to fetch user credits");
+      }
+
+      userCredits = userData.credits;
+
+      if (userCredits < 1) {
         return NextResponse.json(
-          {
-            error:
-              "Daily diagram limit reached. Please add both Google and Mistral API keys for unlimited diagrams.",
-          },
-          { status: 429 }
+          { error: "Insufficient credits. Please purchase more credits." },
+          { status: 403 }
         );
       }
+    } catch (error) {
+      return NextResponse.json(
+        { error: "Authentication failed" },
+        { status: 401 }
+      );
     }
 
     // Check cache first
-    const cachedResult = await getCodeCache(code, fileName);
+    const cachedResult = await getCodeCache(code, "flowchart");
     if (cachedResult) {
-      // Only increment count if not using both custom keys
-      if (!hasCustomKeys) {
-        await incrementDiagramCount();
-        const remainingCount = 50 - (await getTodaysDiagramCount());
-        return NextResponse.json({
-          executionSteps: cachedResult.execution_steps,
-          mermaidChart: cachedResult.mermaid_chart,
-          usageCount: 50 - remainingCount,
-          cached: true,
-        });
+      // Deduct credit for cached result
+      const { error: updateError } = await supabase
+        .from("users")
+        .update({ credits: userCredits - 1 })
+        .eq("id", userId);
+
+      if (updateError) {
+        console.error("Failed to update credits:", updateError);
       } else {
-        return NextResponse.json({
-          executionSteps: cachedResult.execution_steps,
-          mermaidChart: cachedResult.mermaid_chart,
-          usageCount: 0,
-          cached: true,
-          unlimited: true,
-        });
+        creditDeducted = true;
       }
+
+      return NextResponse.json({
+        mermaidChart: cachedResult.mermaid_chart,
+        executionSteps: cachedResult.execution_steps,
+        usageCount: userCredits - 1,
+      });
     }
 
-    // Initialize AI clients with appropriate keys
-    const genAI = new GoogleGenerativeAI(googleKey);
+    // Process with AI
+    const geminiModel = new GoogleGenerativeAI(googleKey).getGenerativeModel({
+      model: "gemini-2.0-flash",
+    });
+
     const mistralClient = new Mistral({
       apiKey: mistralKey,
     });
-
-    // Step 1: Use Gemini to analyze code and create execution steps
-    const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     // Basic code validation
     const codeLines = code.trim().split("\n");
@@ -209,30 +249,36 @@ Remember: Only output the node definitions and connections, nothing else.`;
     const mermaidChart = cleanMermaidChart(content);
 
     // Save to cache
-    await saveToCodeCache(code, fileName, executionSteps, mermaidChart);
+    await saveToCodeCache(code, "flowchart", executionSteps, mermaidChart);
 
-    // Increment diagram count
-    const success = await incrementDiagramCount();
-    if (!success) {
-      return NextResponse.json(
-        { error: "Failed to track diagram generation" },
-        { status: 500 }
-      );
+    // Deduct credit after successful generation
+    if (!creditDeducted) {
+      const { error: updateError } = await supabase
+        .from("users")
+        .update({ credits: userCredits - 1 })
+        .eq("id", userId);
+
+      if (updateError) {
+        console.error("Failed to update credits:", updateError);
+      }
     }
 
+    // Record the transaction
+    await supabase.from("credit_transactions").insert({
+      user_id: userId,
+      amount: -1,
+      type: "usage",
+    });
+
     return NextResponse.json({
-      executionSteps,
       mermaidChart,
-      usageCount: 50 - (await getTodaysDiagramCount()),
-      cached: false,
+      executionSteps,
+      usageCount: userCredits - 1,
     });
   } catch (error) {
     console.error("Processing error:", error);
     return NextResponse.json(
-      {
-        error:
-          "Oops! This doesn't look like code. Try pasting in some actual code (you know, the stuff with functions, loops, and all that fun syntax). We're better at flowcharting code than poetry! 🎨",
-      },
+      { error: "Failed to process code. Please try again." },
       { status: 500 }
     );
   }

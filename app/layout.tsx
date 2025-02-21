@@ -4,6 +4,7 @@ import { plusJakartaSans, bricolageGrotesque } from "./fonts";
 import Loading from "./loading";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { AuthProvider } from "@/lib/context/auth";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -96,7 +97,9 @@ export default function RootLayout({
         className={`${plusJakartaSans.variable} ${bricolageGrotesque.variable} antialiased bg-[#fbf9f6]`}
         suppressHydrationWarning
       >
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <AuthProvider>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </AuthProvider>
         <Analytics />
       </body>
     </html>
