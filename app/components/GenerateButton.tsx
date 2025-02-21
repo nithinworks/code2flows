@@ -1,4 +1,4 @@
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/lib/context/auth";
 
 export function GenerateButton({
   loading,

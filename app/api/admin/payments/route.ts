@@ -40,7 +40,7 @@ export async function GET() {
     if (error) throw error;
 
     // Format transactions as payments
-    const formattedPayments = transactions?.map((transaction) => ({
+    const formattedPayments = transactions?.map((transaction: any) => ({
       id: transaction.id,
       user_email: transaction.users.email,
       credits: transaction.amount,

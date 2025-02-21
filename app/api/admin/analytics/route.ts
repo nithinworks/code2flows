@@ -48,14 +48,16 @@ export async function GET() {
         type,
         created_at,
         user_id,
-        users!inner(email)
+        users!inner (
+          email
+        )
       `
       )
       .order("created_at", { ascending: false })
       .limit(50);
 
     // Format transactions
-    const formattedTransactions = transactions?.map((t) => ({
+    const formattedTransactions = transactions?.map((t: any) => ({
       id: t.id,
       user_id: t.user_id,
       user_email: t.users.email,

@@ -26,7 +26,6 @@ if (typeof window !== "undefined") {
     securityLevel: "loose",
     er: {
       useMaxWidth: false,
-      padding: 20,
       layoutDirection: "TB",
       minEntityWidth: 100,
       minEntityHeight: 75,
