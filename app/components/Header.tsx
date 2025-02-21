@@ -160,17 +160,29 @@ export const Header = () => {
             <div className="md:hidden py-4 border-t border-[#001e2b]/10">
               <div className="flex flex-col gap-4">
                 <Link
+                  href="/"
+                  className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
+                >
+                  Code Vizualizer
+                </Link>
+                <Link
                   href="/er-diagram"
                   className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
                 >
                   ER Diagram Vizualizer
                 </Link>
-                <div className="text-[#001e2b]/40 text-sm font-medium flex items-center gap-1.5 cursor-not-allowed">
+                <Link
+                  href="/architecture"
+                  className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
+                >
                   Architecture Vizualizer
-                  <span className="text-[8px] font-medium px-1 py-0.5 bg-[#001e2b]/5 text-[#001e2b] rounded-full border border-[#001e2b]/20">
-                    SOON
-                  </span>
-                </div>
+                </Link>
+                <Link
+                  href="/credits"
+                  className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
+                >
+                  Credits Pack
+                </Link>
 
                 {user ? (
                   <>
