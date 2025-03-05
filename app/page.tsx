@@ -228,18 +228,18 @@ export default function Home() {
       priceCurrency: "USD",
     },
     description:
-      "Transform your code into beautiful, interactive flowcharts instantly with AI-powered visualization.",
+      "AIを活用した可視化で、コードを美しくインタラクティブなフローチャートに瞬時に変換します。",
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.8",
       ratingCount: "150",
     },
     featureList: [
-      "AI-powered code analysis",
-      "Multiple programming language support",
-      "Interactive flowcharts",
-      "Step-by-step execution explanation",
-      "SVG export capability",
+      "AIを活用したコード分析",
+      "複数のプログラミング言語対応",
+      "インタラクティブなフローチャート",
+      "ステップバイステップの実行説明",
+      "SVGエクスポート機能",
     ],
   };
 
@@ -267,20 +267,19 @@ export default function Home() {
         <div className="relative z-10 w-full mt-16 md:mt-24 flex-grow">
           <div className="container mx-auto px-4 py-8 md:py-16 flex flex-col items-center">
             {/* Announcement Banner */}
-            <div className="bg-[#00ed64]/5 text-[#001e2b] px-4 md:px-5 py-2 rounded-md text-xs md:text-sm mb-8 md:mb-12 flex items-center gap-2 border border-[#00ed64]/20 animate-fade-in">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#00ed64]"></span>
-              Completely Free – No Signup Required!
+            <div className="bg-[#3b82f6]/10 text-[#001e2b] px-4 md:px-5 py-2 rounded-md text-xs md:text-sm mb-8 md:mb-12 flex items-center gap-2 border border-blue-100/20 animate-fade-in">
+              <span className="inline-block w-2 h-2 rounded-full bg-blue-500"></span>
+              無料クレジットをお楽しみください – サインアップは不要です!
             </div>
 
             {/* Main Heading */}
             <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12 animate-fade-in stagger-1">
               <h1 className="text-[32px] md:text-[50px] leading-tight font-bold mb-3 md:mb-4 text-[#001e2b] font-bricolage">
-                Code to Flowchart in seconds.
+                数秒でコードをフローチャートに変換します。
               </h1>
               <p className="text-lg md:text-m text-[#001e2b]/60 font-medium">
-                Understanding code has never been easier! Transform your code
-                into interactive, beautifully structured flowcharts in just a
-                click
+                コードの理解がこれまでになく簡単になりました。
+                クリックするだけで、コードをインタラクティブで美しく構造化されたフローチャートに変換できます。
               </p>
             </div>
 
@@ -294,8 +293,8 @@ export default function Home() {
                   <div className="space-y-4">
                     <div className="relative group">
                       <textarea
-                        placeholder="Paste your code here..."
-                        className="w-full h-64 p-4 bg-white text-[#001e2b] rounded-md border-2 border-[#001e2b] focus:border-[#00ed64] focus:ring-1 focus:ring-[#00ed64] transition placeholder-[#001e2b]/30"
+                        placeholder="ここにコードを貼り付けてください..."
+                        className="w-full h-64 p-4 bg-white text-[#001e2b] rounded-md border-2 border-[#001e2b] focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition placeholder-[#001e2b]/30"
                         value={fileContent}
                         onChange={handleCodeInput}
                       />
@@ -319,11 +318,13 @@ export default function Home() {
                             <FiUpload className="w-8 h-8 mb-3 text-[#001e2b]/40 group-hover:text-[#001e2b]/60 transition-colors" />
                           )}
                           <p className="mb-2 text-sm text-[#001e2b]/60">
-                            <span className="font-medium">Click to upload</span>{" "}
-                            or drag and drop
+                            <span className="font-medium">
+                              クリックしてアップロード
+                            </span>{" "}
+                            またはドラッグ＆ドロップ
                           </p>
                           <p className="text-xs text-[#001e2b]/40">
-                            Supported files: {allowedFileTypes.join(", ")}
+                            対応ファイル: {allowedFileTypes.join(", ")}
                           </p>
                         </div>
                         <input
@@ -345,7 +346,7 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className={`w-full py-3 px-4 bg-[#00ed64] text-[#001e2b] font-semibold rounded-md border-2 border-[#001e2b] transition-all hover:bg-[#00ed64]/90 ${
+                    className={`w-full py-3 px-4 bg-blue-500 text-white font-semibold rounded-md border-2 border-[#001e2b] transition-all hover:bg-blue-600 ${
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >
@@ -355,9 +356,9 @@ export default function Home() {
                         <span>{loadingStep}</span>
                       </div>
                     ) : user ? (
-                      "Generate Flowchart"
+                      "フローチャートを生成"
                     ) : (
-                      "Sign in to Generate"
+                      "サインインして生成"
                     )}
                   </button>
                 </form>
@@ -378,7 +379,7 @@ export default function Home() {
                 >
                   <div className="bg-white p-4 md:p-8 rounded-lg border-2 border-[#001e2b] shadow-sm">
                     <h2 className="text-lg md:text-xl font-semibold text-[#001e2b] mb-4 font-bricolage">
-                      Visualization
+                      可視化
                     </h2>
                     <FlowchartViewer
                       chart={flowchartData.mermaidChart}
@@ -403,9 +404,9 @@ export default function Home() {
                     1
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    Paste or Upload
+                    コードを貼り付けるか
                     <br />
-                    your code.
+                    アップロード
                   </h3>
                 </div>
 
@@ -415,9 +416,9 @@ export default function Home() {
                     2
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    AI analyzes and
+                    AIが分析して
                     <br />
-                    generates flowchart.
+                    フローチャートを生成
                   </h3>
                 </div>
 
@@ -427,9 +428,9 @@ export default function Home() {
                     3
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    Understand
+                    コードを視覚的に
                     <br />
-                    your code visually.
+                    理解する
                   </h3>
                 </div>
 
@@ -439,9 +440,9 @@ export default function Home() {
                     4
                   </div>
                   <h3 className="text-lg font-semibold text-[#001e2b] font-bricolage">
-                    Export and share
+                    エクスポートして
                     <br />
-                    with your mates.
+                    共有する
                   </h3>
                 </div>
               </div>
@@ -453,9 +454,9 @@ export default function Home() {
             <div className="container mx-auto px-4">
               <div className="text-center mb-8 md:mb-16 animate-fade-in">
                 <h2 className="text-3xl md:text-4xl font-bold text-[#001e2b] mb-4 font-bricolage">
-                  Who Can Benefit from
+                  CodetoFlowsは
                   <br className="hidden md:block" />
-                  CodetoFlows?
+                  誰に役立つのか？
                 </h2>
               </div>
 
@@ -463,44 +464,40 @@ export default function Home() {
                 {/* Product Teams */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-1 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Learn & Understand Code
+                    コードの学習と理解
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
-                    Break down complex logic into clear, step-by-step flowcharts
-                    to improve comprehension and learning.
+                    複雑なロジックを明確なステップバイステップのフローチャートに分解し、理解と学習を促進します。
                   </p>
                 </div>
 
                 {/* Founders & Indie-hackers */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-2 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Review & Refactor Code
+                    コードのレビューとリファクタリング
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
-                    Analyze execution flow to simplify, clean up, and improve
-                    the efficiency of your code.
+                    実行フローを分析し、コードの簡素化、クリーンアップ、効率性の向上を図ります。
                   </p>
                 </div>
 
                 {/* Product Designers */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-3 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Document Code Effortlessly
+                    簡単なコードドキュメント作成
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
-                    Bring your design idea to life without tedious prototyping
-                    work in tools like Figma.
+                    面倒なプロトタイピング作業なしで、デザインアイデアを実現します。
                   </p>
                 </div>
 
                 {/* Software Engineers */}
                 <div className="bg-[#001e2b]/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-[#001e2b]/10 animate-fade-in stagger-4 hover:border-[#001e2b]/20 transition-all duration-300">
                   <h3 className="text-2xl font-semibold text-[#001e2b] mb-3 font-bricolage">
-                    Explain Code to Others
+                    他者へのコード説明
                   </h3>
                   <p className="text-[#001e2b]/70 text-lg">
-                    Easily communicate logic and execution flow with teammates,
-                    students, or clients using clear visuals.
+                    明確な視覚化を用いて、チームメイト、学生、クライアントにロジックと実行フローを簡単に伝えることができます。
                   </p>
                 </div>
               </div>
@@ -517,81 +514,65 @@ export default function Home() {
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
                 <h2 className="text-3xl md:text-4xl font-bold text-[#001e2b] mb-8 md:mb-12 text-center font-bricolage">
-                  Frequently Asked Questions
+                  よくある質問
                 </h2>
                 <div className="space-y-6">
                   {/* FAQ Item 1 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      What types of code files can I upload?
+                      どのような種類のコードファイルをアップロードできますか？
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      You can paste code directly in the input box, and it will
-                      support any programming language. However, if you choose
-                      to upload a file, we currently support .txt, .pdf, .js,
-                      .py, .java, .sql, .cpp, and more. We are constantly
-                      improving support for more formats!
+                      入力ボックスに直接コードを貼り付けることができ、どのプログラミング言語でも対応しています。ファイルをアップロードする場合は、現在.txt、.pdf、.js、.py、.java、.sql、.cppなどに対応しています。さらに多くのフォーマットのサポートを継続的に改善しています！
                     </p>
                   </div>
 
                   {/* FAQ Item 2 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      Why is this tool free?
+                      なぜこのツールは無料なのですか？
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      We offer this tool for free to help developers, students,
-                      and professionals better understand their code visually.
-                      We use a daily limit to control API costs, but users can
-                      enter their own API keys for unlimited usage.
+                      開発者、学生、専門家がコードを視覚的により理解しやすくするため、このツールを無料で提供しています。APIコストを管理するために日次制限を設けていますが、ユーザーは無制限使用のために独自のAPIキーを入力することができます。
                     </p>
                   </div>
 
                   {/* FAQ Item 3 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      Is my uploaded code stored or shared?
+                      アップロードしたコードは保存または共有されますか？
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      No, your code is processed securely and never shared. The
-                      code is stored in database to eliminate duplicate api
-                      calling and it will be auto-cleaned every 6 hours. We
-                      respect your privacy and ensure data safety.
+                      いいえ、コードは安全に処理され、共有されることはありません。重複APIコールを排除するためにデータベースに保存され、6時間ごとに自動クリーニングされます。プライバシーを尊重し、データの安全性を確保しています。
                     </p>
                   </div>
 
                   {/* FAQ Item 4 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      Can I use my own API key for unlimited diagrams?
+                      無制限の図表生成のために独自のAPIキーを使用できますか？
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      Yes! If you have your own Google Gemini and Mistral API
-                      keys, you can enter them to bypass the daily limit and
-                      generate unlimited diagrams. Your API keys are stored
-                      securely in your local storage and never sent to our
-                      servers.
+                      はい！独自のGoogle GeminiとMistral
+                      APIキーをお持ちの場合、それらを入力して日次制限を回避し、無制限に図表を生成することができます。APIキーはローカルストレージに安全に保存され、サーバーに送信されることはありません。
                     </p>
                   </div>
                   {/* FAQ Item 5 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      What programming languages do you support?
+                      どのプログラミング言語に対応していますか？
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      Our tool supports any programming language when pasting
-                      code directly.
+                      コードを直接貼り付ける場合、当ツールはあらゆるプログラミング言語に対応しています。
                     </p>
                   </div>
                   {/* FAQ Item 6 */}
                   <div className="bg-white rounded-lg border-2 border-[#001e2b] p-6">
                     <h3 className="text-lg font-semibold text-[#001e2b] mb-2 font-bricolage">
-                      How long does it take to generate a flowchart?
+                      フローチャートの生成にどのくらい時間がかかりますか？
                     </h3>
                     <p className="text-[#001e2b]/70">
-                      The process is almost instant! Once you paste or upload
-                      your file, AI analyzes it and generates a flowchart in
-                      just a few seconds.
+                      処理はほぼ瞬時です！ファイルを貼り付けるかアップロードすると、AIが数秒で分析してフローチャートを生成します。
                     </p>
                   </div>
                 </div>
@@ -604,18 +585,17 @@ export default function Home() {
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-[#001e2b] mb-6 font-bricolage">
-                  Ready to transform your code into clear, visual flowcharts?
+                  コードを明確な視覚的フローチャートに変換する準備はできましたか？
                 </h2>
                 <p className="text-lg md:text-xl text-[#001e2b]/60 mb-8">
-                  Start generating beautiful flowcharts in seconds. No sign-up
-                  required.
+                  数秒で美しいフローチャートの生成を開始。サインアップ不要。
                 </p>
                 <button
                   onClick={scrollToTop}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#00ed64] text-[#001e2b] font-semibold rounded-md border-2 border-[#001e2b] transition-all hover:bg-[#00ed64]/90"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 text-white font-semibold rounded-md border-2 border-[#001e2b] transition-all hover:bg-blue-600"
                 >
                   <FiChevronUp className="w-5 h-5" />
-                  <span>Try it now</span>
+                  <span>今すぐ試す</span>
                 </button>
               </div>
             </div>
