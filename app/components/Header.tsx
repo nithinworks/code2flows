@@ -70,25 +70,25 @@ export const Header = () => {
                 href="/"
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
               >
-                Code Vizualizer
+                コード可視化
               </Link>
               <Link
                 href="/er-diagram"
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
               >
-                ER Diagram Vizualizer
+                ER図可視化
               </Link>
               <Link
                 href="/architecture"
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
               >
-                Architecture Vizualizer
+                アーキテクチャ可視化
               </Link>
               <Link
                 href="/credits"
                 className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
               >
-                Credits Pack
+                クレジットパック
               </Link>
             </div>
 
@@ -96,13 +96,13 @@ export const Header = () => {
               {user ? (
                 <>
                   <div className="hidden md:flex items-center gap-2">
-                    <span className="px-3 py-1 bg-[#00ed64]/10 text-[#001e2b] text-sm font-semibold rounded-full border border-[#00ed64]">
-                      {credits} credits
+                    <span className="px-3 py-1 bg-[#3b82f6]/10 text-[#001e2b] text-sm font-semibold rounded-full border border-blue-100/20">
+                      {credits} クレジット
                     </span>
                     <div className="relative" ref={profileMenuRef}>
                       <button
                         onClick={() => setShowProfileMenu(!showProfileMenu)}
-                        className="p-2 rounded-md border-2 border-[#001e2b] text-[#001e2b] hover:bg-[#001e2b]/5 transition"
+                        className="p-2 rounded-md border-2 border-[#001e2b] text-[#001e2b] hover:bg-[#3b82f6]/10 transition"
                       >
                         <FiUser className="w-4 h-4" />
                       </button>
@@ -114,20 +114,20 @@ export const Header = () => {
                               setIsProfileModalOpen(true);
                               setShowProfileMenu(false);
                             }}
-                            className="w-full text-left px-4 py-2 text-sm text-[#001e2b]/70 hover:text-[#001e2b] hover:bg-[#001e2b]/5 transition flex items-center gap-2"
+                            className="w-full text-left px-4 py-2 text-sm text-[#001e2b]/70 hover:text-[#001e2b] hover:bg-[#3b82f6]/10 transition flex items-center gap-2"
                           >
                             <FiUser className="w-4 h-4" />
-                            Profile
+                            プロフィール
                           </button>
                           <button
                             onClick={() => {
                               signOut();
                               setShowProfileMenu(false);
                             }}
-                            className="w-full text-left px-4 py-2 text-sm text-[#001e2b]/70 hover:text-[#001e2b] hover:bg-[#001e2b]/5 transition flex items-center gap-2"
+                            className="w-full text-left px-4 py-2 text-sm text-[#001e2b]/70 hover:text-[#001e2b] hover:bg-[#3b82f6]/10 transition flex items-center gap-2"
                           >
                             <FiLogOut className="w-4 h-4" />
-                            Sign Out
+                            サインアウト
                           </button>
                         </div>
                       )}
@@ -137,9 +137,9 @@ export const Header = () => {
               ) : (
                 <button
                   onClick={() => setIsAuthModalOpen(true)}
-                  className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold"
+                  className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#3b82f6]/10 transition font-semibold"
                 >
-                  Sign In
+                  サインイン
                 </button>
               )}
 
@@ -163,32 +163,32 @@ export const Header = () => {
                   href="/"
                   className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
                 >
-                  Code Vizualizer
+                  コード可視化
                 </Link>
                 <Link
                   href="/er-diagram"
                   className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
                 >
-                  ER Diagram Vizualizer
+                  ER図可視化
                 </Link>
                 <Link
                   href="/architecture"
                   className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
                 >
-                  Architecture Vizualizer
+                  アーキテクチャ可視化
                 </Link>
                 <Link
                   href="/credits"
                   className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm font-medium"
                 >
-                  Credits Pack
+                  クレジットパック
                 </Link>
 
                 {user ? (
                   <>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-[#00ed64]/10 text-[#001e2b] text-sm font-semibold rounded-full border border-[#00ed64]">
-                        {credits} credits
+                      <span className="px-3 py-1 bg-[#3b82f6]/10 text-[#001e2b] text-sm font-semibold rounded-full border border-blue-100/20">
+                        {credits} クレジット
                       </span>
                     </div>
                     <div className="text-sm text-[#001e2b]/70 px-1">
@@ -199,10 +199,10 @@ export const Header = () => {
                         signOut();
                         setMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold w-full justify-center"
+                      className="flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#3b82f6]/10 transition font-semibold w-full justify-center"
                     >
                       <FiLogOut className="w-4 h-4" />
-                      Sign Out
+                      サインアウト
                     </button>
                   </>
                 ) : (
@@ -211,9 +211,9 @@ export const Header = () => {
                       setIsAuthModalOpen(true);
                       setMobileMenuOpen(false);
                     }}
-                    className="flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#001e2b]/5 transition font-semibold w-full justify-center"
+                    className="flex items-center gap-2 px-4 py-1.5 rounded-md border-2 border-[#001e2b] text-sm text-[#001e2b] hover:bg-[#3b82f6]/10 transition font-semibold w-full justify-center"
                   >
-                    Sign In
+                    サインイン
                   </button>
                 )}
               </div>
