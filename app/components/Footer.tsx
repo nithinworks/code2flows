@@ -31,25 +31,25 @@ export const Footer = () => {
               href="/about"
               className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm"
             >
-              About
+              会社概要
             </Link>
             <Link
               href="/contact"
               className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm"
             >
-              Contact
+              お問い合わせ
             </Link>
             <Link
               href="/changelog"
               className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-sm"
             >
-              Changelog
+              更新履歴
             </Link>
           </div>
 
           {/* Copyright */}
           <div className="text-xs md:text-sm text-[#001e2b]/60 text-center md:text-right">
-            © {new Date().getFullYear()} CodetoFlows. All rights reserved.
+            © {new Date().getFullYear()} CodetoFlows. 無断複写・転載を禁じます。
           </div>
         </div>
 
@@ -59,19 +59,19 @@ export const Footer = () => {
             href="/about"
             className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-xs"
           >
-            About
+            会社概要
           </Link>
           <Link
             href="/contact"
             className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-xs"
           >
-            Contact
+            お問い合わせ
           </Link>
           <Link
             href="/changelog"
             className="text-[#001e2b]/70 hover:text-[#001e2b] transition text-xs"
           >
-            Changelog
+            更新履歴
           </Link>
         </div>
       </div>
