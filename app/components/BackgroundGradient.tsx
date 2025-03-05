@@ -10,7 +10,7 @@ export const BackgroundGradient = () => {
           className="w-full h-full rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(circle at center, #00684a 0%, #00ed9b 30%, transparent 70%)",
+              "radial-gradient(circle at center, #3b82f6 0%, #3b82f6 30%, transparent 70%)",
             transform: "rotate(-10deg)",
             willChange: "transform",
             opacity: 0.2,
